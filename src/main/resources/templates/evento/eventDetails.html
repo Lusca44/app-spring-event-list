@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>Events Aplication</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="style/style.css" />
+</head>
+
+<body>
+	<header>
+		<nav>
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">Event Details</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a href="/events" class="waves-effect waves-light btn"><i
+								class="material-icons left">arrow_back</i>Return to
+							event list</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<div th:each="event : ${Event}" class="container detalhesEvento">
+		<div class="row">
+			<p>Name: <span th:text="${event.name}"></span></p>
+			<p>Local: <span th:text="${event.local}"></span></p>
+			<p>Date: <span th:text="${event.date}"></span></p>
+			<p>Time: <span th:text="${event.time}"></span></p>
+		</div>
+	</div>
+	<th:block th:include="validationMessage"></th:block>
+
+	<div class="container formConvidado">
+		<form method="POST">
+			Name: <input type="text" value="" name="guestName" />
+			Rg: <input type="text" value="" name="rg" />
+			<button type="submit" class="waves-effect waves-light btn">Add a guest</button>
+		</form>
+	</div>
+
+	<table class="container tabelaConvidado">
+		<div class="row">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>RG</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="guest : ${Guests}">
+					<td><span th:text="${guest.guestName}" </span></td>
+					<td><span th:text="${guest.rg}" </span></td>
+					<td><a th:href="${(#mvc.url('EC#deleteGuest').arg(0, guest.rg)).build()}"
+							class="waves-effect waves-light btn-small"><i
+								class="material-icons left">delete</i>Delete</a></td>
+				</tr>
+			</tbody>
+	</table>
+
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+</body>
+
+</html>
